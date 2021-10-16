@@ -64,6 +64,32 @@ void selectionSort(int array[], int N)
   //call swap
 
   //You can find more information in my homework document
+
+  /**
+   * find smallest
+   * check if right is smaller than left
+   *    set smallest
+   * if smallest then swap
+   * move to next element in unsorted elements
+   */
+   int smallest = -1;
+   int smallestIndex = smallest;
+    for (int i = 0; i < N; i++)
+    {
+        int j;
+        for (j = i+1; j < N; j++)
+        {
+            int right = array[j];
+            int left = array[i];
+            if (right < left)
+            {
+                smallest = right;
+                smallestIndex = j;
+                swap(array[i], array[smallestIndex]);
+                continue;
+            }
+        }
+    }
 }
 
 //Implemented by Kazumi Slott
