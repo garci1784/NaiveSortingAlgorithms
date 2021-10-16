@@ -117,14 +117,86 @@ void bubbleSort(int ar[], int s)
     }//end of while                                                                                               
 }
 
-int partition(int a[], int start, int end)
+/**
+ * This function divides an array into segments that will be used to
+ * swap elements in order to organize them using a pivot value
+ * @param ar the array to be organized/ segmented
+ * @param start the index where the segmenting will start
+ * @param end the index where the segmenting will end
+ * @return returns the index at which the pivot went in.
+ */
+int partition(int ar[], int start, int end)
 {
-  //copy and paste partition() from your quickSort.cpp
+
+    //I have 3 variables: pivot, i and swap_index. You may have any local variables.
+    int pivot = ar[end];
+    //cout << "pivot: " << pivot << endl;
+    int i = start; // green
+    int swap_index = start; // red
+
+    //For implementation of this function, refer to my lecture notes "quick sort".
+    //If you used a different implementation, I would assume you cheated and give you zero points.
+
+    //green traverses the partition from start to the index right before pivot
+    for (;  i <= end - 1;  i++)
+    {
+        // red points to the element that will be swapped with a value less than the pivot value.
+        // Red points to the first value that is greater than pivot value.
+
+
+        /* Check the current element at green.
+         * If it is less than the pivot value, swap it with the value at red.
+         * Then move red to the next slot.
+         */
+
+        if (ar[i] <= pivot)
+        {
+            // Swap elements at red and green then move red to the next slot.
+            swap(ar[swap_index], ar[i]);
+            //printAr(ar, 9);
+            // Notice red now points to the first value that is greater than the pivot value (elements to the left of red are less than pivot value).
+            // The next element that is less than pivot value will be swapped with the value at red.
+            swap_index++;
+        }
+
+
+
+        //printAr(ar, 9);
+    }
+
+    swap(ar[swap_index], ar[end]);
+
+
+    //This function returns the index where the pivot value went in.
+    return swap_index;
+
 }
 
+/**
+ * This function uses Tony Hoare's sorting algorithm quicksort to
+ * sort an array from least to greatest.
+ * It works by using a pivot value.
+ * Every element to the left is less than the pivot value
+ * and every element to the right is greater than the pivot value.
+ * @param ar the array which will be sorted
+ * @param start the index where the array is to be sorted
+ * @param end the index of the last element in the array
+ */
 void quickSort(int ar[], int start, int end)
 {
-  //copy and paste quickSort() from your quickSort.cpp   
+    if( (end - start) >= 2 || (start < end)) //If the partition has only one element or none, return.
+        //In other words, if the partition has at least 2 elements, go inside the if.
+        //use start and end to figure out.
+    {
+        //call partition.
+        int parti = partition(ar, start, end);
+        //quickSort on the left partition
+        int leftPartition = parti - 1;
+        int rightPartition = parti + 1;
+        quickSort(ar, start, leftPartition);
+        //quickSort on the right partition
+        quickSort(ar, rightPartition, end);
+    }
 }
 
 void merge(int ar[], int first, int last)
