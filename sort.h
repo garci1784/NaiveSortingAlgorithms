@@ -199,15 +199,138 @@ void quickSort(int ar[], int start, int end)
     }
 }
 
+/**
+ * This function sorts halves of an array in order to
+ * sort the entire array. This function uses the algorithm
+ * created by Jon von Neumann.
+ * @param ar the array to be sorted
+ * @param first the initial element in the array
+ * @param last the final element in the array
+ */
 void merge(int ar[], int first, int last)
 {
-  //copy and paste merge() from your mergeSort.cpp   
+    //For implementation of this function, refer to my lecture notes "merge sort"
+    //If you are using a different technique, I assume you cheated and will give you zero points.
+    /*
+    int sizeFirst = first;
+    int sizeLast = last;
+     */
+
+    int left = first;
+    int middle = (first + last) / 2;
+    int right = middle + 1;
+
+    /*
+  int arrFirstElement = ar[first];
+  int arrLastElement = ar[last];
+     */
+
+    //int mergedArraySize = last + 1;
+    int mergedArraySize = (last - first) + 1;
+    //make temp array dynamically with the exact number of slots you need
+    int* mergedArray = new int[mergedArraySize];
+
+    /*
+     * [1, 4, 6, 8, 10, 3, 5, 2, 22]
+     *
+     * GOAL: SORT halved array before merging
+     *  5  6  7   8
+     * [3, 5, 2, 22]
+     * temp[][][][]
+     *
+     *  left = 5  // ar[left]
+     *  right = 7 // ar[right]
+     *
+     *  if (ar[left] > ar[right])
+     *  {
+     *    temp[i] = ar[right];
+     *  }
+     *  else
+     *  {
+     *    temp[i] = ar[left];
+     *   }
+     *
+     */
+
+    int mergedArrayOpenPosition = 0;
+    while (left <= middle && right <= last) // left and right must be within bounds
+    {
+        /*
+        if (ar[left] < ar[right])
+        {
+            mergedArray[mergedArrayOpenPosition] = ar[left];
+            left++;
+        }
+        else
+        {
+            mergedArray[mergedArrayOpenPosition] = ar[right];
+            right++;
+        }
+         */
+        if (ar[left] > ar[right])
+        {
+            mergedArray[mergedArrayOpenPosition] = ar[right];
+            right++;
+        }
+        else
+        {
+            mergedArray[mergedArrayOpenPosition] = ar[left];
+            left++;
+        }
+        mergedArrayOpenPosition++;
+    }
+
+
+    //printAr(mergedArray, mergedArraySize);
+
+    // once bounds are broken "Copy the remainder of elements from the right array" or left.
+
+    while (left <= middle)
+    {
+        mergedArray[mergedArrayOpenPosition] = ar[left];
+        left++;
+        mergedArrayOpenPosition++;
+    }
+
+    while (right <= last)
+    {
+        mergedArray[mergedArrayOpenPosition] = ar[right];
+        right++;
+        mergedArrayOpenPosition++;
+    }
+
+
+    //load the content of temp to array
+    for (int i  = 0; i < mergedArraySize; i++)
+    {
+        //ar[i] = mergedArray[i];
+        ar[first + i] = mergedArray[i];
+    }
+
+    //Don't forget to destroy temp array, which is created dynamically
+    delete[] mergedArray;
 }
 
+/**
+ * This function uses Jon von Neumann's algorithm mergesort to
+ * sort an array.
+ * @param ar the array to be sorted
+ * @param first the initial element in the array
+ * @param last  the final element in the array
+ */
 void mergeSort(int ar[], int first, int last)
-
 {
-  //copy and paste mergeSort()from your mergeSort.cpp   
+    //For implementation of this function, refer to my lecture notes "merge sort"
+    //if there are at least 2 elements
+    if (first < last)
+    {
+        int middle = (first + last)/2;
+        //int mid = ar[middle];
+        mergeSort(ar, first, middle);
+        mergeSort(ar, middle + 1, last);
+        merge(ar, first, last);
+    }
+    //if there is only one element, return to the caller immediately.
 }
 
 
