@@ -28,6 +28,34 @@ void insertionSort(int ar[], int n)
   //https://www.youtube.com/watch?v=ROalU379l3U
   //Implement the insertion sort by watching the above youTube video. Your algorithm has to match their dance.
   //call swap
+  /*
+   * Checks every element
+   * Check Right element
+   *    swap if right is < left
+   * check left element
+   *    swap until swapped value is < left value
+   */
+    for (int i = 1; i < n; i++) // checks right elements
+    {
+        /*
+        int right = ar[i];
+        int left = ar[i-1];
+        */
+        int rightIndex = i;
+        int leftIndex = i-1;
+
+        /*
+        int right = ar[rightIndex];
+        int left = ar[leftIndex];
+         */
+
+        while (ar[rightIndex] < ar[leftIndex]) // checks left elements
+        {
+            swap(ar[rightIndex], ar[leftIndex]);
+            rightIndex--;
+            leftIndex--;
+        }
+    }
 }
 
 void selectionSort(int array[], int N)
